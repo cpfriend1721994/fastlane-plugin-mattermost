@@ -49,11 +49,11 @@ module Fastlane
 
       def self.available_options
         [
-          FastlaneCore::ConfigItem.new(key: :mattermost_webhooks_url,
+          FastlaneCore::ConfigItem.new(key: :url,
                                        env_name: "MATTERMOST_WEBHOOKS_URL",
                                        sensitive: true,
                                        description: "Mattermost Incoming Webhooks URL"),
-          FastlaneCore::ConfigItem.new(key: :mattermost_webhooks_params,
+          FastlaneCore::ConfigItem.new(key: :params,
                                        env_name: "MATTERMOST_WEBHOOKS_PARAMS",
                                        description: "Mattermost Incoming Webhooks Params")
         ]

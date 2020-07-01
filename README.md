@@ -4,10 +4,29 @@
 
 ## Getting Started
 
-This project is a [_fastlane_](https://github.com/fastlane/fastlane) plugin. To get started with `fastlane-plugin-mattermost`, add it to your project by running:
+1. Generate `Mattermost Incoming Webhook`
+    - From your Mattermost organization page, go to `Integrations` -> `Incoming Webhooks` -> `Add Incoming Webhooks`
+    - Configurate Incoming Webhooks
+    - Get Webhooks URL
+
+2. Add plugin to `fastlane`
 
 ```bash
 fastlane add_plugin mattermost
+```
+
+3. Add `mattermost` to your lane in `Fastfile` whenever you want to upload the file
+
+```bash
+lane :build_android do
+
+    ...
+
+    # Push messages to Mattermost
+    mattermost(
+                uri: "https://example.mattermost.com/hooks/xxx-generatedkey-xxx",
+                params: "Hello, this is some text\nThis is more text. :tada:"
+              )
 ```
 
 ## About mattermost
