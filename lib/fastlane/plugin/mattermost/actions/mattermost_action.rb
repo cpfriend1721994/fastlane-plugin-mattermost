@@ -18,6 +18,7 @@ module Fastlane
           'text': (params[:params] || MATTERMOST_WEBHOOKS_PARAMS)
         }
         http = Net::HTTP.new(uri.host, uri.port)
+        http.use_ssl = (uri.scheme == 'https')
         request = Net::HTTP::Post.new(uri.request_uri, header)
         request.body = body.to_json
         response = http.request(request)
