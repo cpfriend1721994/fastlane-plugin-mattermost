@@ -17,7 +17,7 @@ module Fastlane
           }
           body = {
             'payload': {
-              'text': params[:params],
+              'text': params[:text],
               'username': ((params[:username].nil? || params[:username].strip.empty?) ? "Fastlane Mattermost" : params[:username]),
               'icon_url': ((params[:icon_url].nil? || params[:icon_url].strip.empty?) ? "https://www.mattermost.org/wp-content/uploads/2016/04/icon.png" : params[:icon_url])
             }
@@ -57,7 +57,7 @@ module Fastlane
                                        env_name: "MATTERMOST_WEBHOOKS_URL",
                                        sensitive: true,
                                        description: "Mattermost Incoming Webhooks URL"),
-          FastlaneCore::ConfigItem.new(key: :params,
+          FastlaneCore::ConfigItem.new(key: :text,
                                        env_name: "MATTERMOST_WEBHOOKS_PARAMS",
                                        description: "Mattermost Incoming Webhooks Params"),
           FastlaneCore::ConfigItem.new(key: :username,
@@ -83,7 +83,7 @@ module Fastlane
         [
           'mattermost(
             url: "https://example.mattermost.com/hooks/xxx-generatedkey-xxx",
-            params: "Hello, this is some text\nThis is more text. :tada:",
+            text: "Hello, this is some text\nThis is more text. :tada:",
             username: "Fastlane Mattermost",
             icon_url: "https://www.mattermost.org/wp-content/uploads/2016/04/icon.png"
           )'
