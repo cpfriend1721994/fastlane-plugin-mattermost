@@ -11,14 +11,14 @@ module Fastlane
         require 'json'
 
         begin
-          uri = URI.parse(params[:url] || MATTERMOST_WEBHOOKS_URL)
+          uri = URI.parse(params[:url])
           header = {
             'Content-Type': 'application/json'
           }
           body = {
-            'text': (params[:params] || MATTERMOST_WEBHOOKS_PARAMS),
-            'username': (params[:username] || MATTERMOST_WEBHOOKS_USERNAME || "Fastlane Mattermost"),
-            'icon_url': (params[:icon_url] || MATTERMOST_WEBHOOKS_ICON_URL || "https://www.mattermost.org/wp-content/uploads/2016/04/icon.png")
+            'text': (params[:params]),
+            'username': (params[:username] || "Fastlane Mattermost"),
+            'icon_url': (params[:icon_url] || "https://www.mattermost.org/wp-content/uploads/2016/04/icon.png")
           }
           http = Net::HTTP.new(uri.host, uri.port)
           http.use_ssl = (uri.scheme == 'https')
