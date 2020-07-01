@@ -11,7 +11,7 @@ module Fastlane
         require 'json'
 
         begin
-          uri = URI.parse(params[:uri] || MATTERMOST_WEBHOOKS_URL)
+          uri = URI.parse(params[:url] || MATTERMOST_WEBHOOKS_URL)
           header = {
             'Content-Type': 'application/json'
           }
@@ -70,7 +70,7 @@ module Fastlane
       def self.example_code
         [
           'mattermost(
-            uri: "https://example.mattermost.com/hooks/xxx-generatedkey-xxx",
+            url: "https://example.mattermost.com/hooks/xxx-generatedkey-xxx",
             params: "Hello, this is some text\nThis is more text. :tada:"
           )'
         ]
