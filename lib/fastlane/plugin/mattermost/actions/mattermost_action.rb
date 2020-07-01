@@ -60,9 +60,11 @@ module Fastlane
                                        description: "Mattermost Incoming Webhooks Params"),
           FastlaneCore::ConfigItem.new(key: :username,
                                        env_name: "MATTERMOST_WEBHOOKS_USERNAME",
+                                       optional: true,
                                        description: "Mattermost Incoming Webhooks Username"),
           FastlaneCore::ConfigItem.new(key: :icon_url,
                                        env_name: "MATTERMOST_WEBHOOKS_ICON_URL",
+                                       optional: true,
                                        description: "Mattermost Incoming Webhooks Icon URL")
         ]
       end
