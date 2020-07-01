@@ -16,9 +16,9 @@ module Fastlane
             'Content-Type': 'application/json'
           }
           body = {
-            'text': (params[:params]),
-            'username': (params[:username] || "Fastlane Mattermost"),
-            'icon_url': (params[:icon_url] || "https://www.mattermost.org/wp-content/uploads/2016/04/icon.png")
+            'text': params[:params],
+            'username': (params[:username].blank? ? "Fastlane Mattermost" : params[:username]),
+            'icon_url': (params[:icon_url].blank? ? "https://www.mattermost.org/wp-content/uploads/2016/04/icon.png" : params[:icon_url])
           }
           http = Net::HTTP.new(uri.host, uri.port)
           http.use_ssl = (uri.scheme == 'https')
