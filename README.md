@@ -25,7 +25,9 @@ lane :build_android do
     # Push messages to Mattermost
     mattermost(
                 url: "https://example.mattermost.com/hooks/xxx-generatedkey-xxx",
-                params: "Hello, this is some text\nThis is more text. :tada:"
+                params: "Hello, this is some text\nThis is more text. :tada:",
+                username: "Fastlane Mattermost",
+                icon_url: "https://www.mattermost.org/wp-content/uploads/2016/04/icon.png"
               )
 ```
 

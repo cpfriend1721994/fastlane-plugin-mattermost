@@ -16,7 +16,9 @@ module Fastlane
             'Content-Type': 'application/json'
           }
           body = {
-            'text': (params[:params] || MATTERMOST_WEBHOOKS_PARAMS)
+            'text': (params[:params] || MATTERMOST_WEBHOOKS_PARAMS),
+            'username': (params[:username] || MATTERMOST_WEBHOOKS_USERNAME || "Fastlane Mattermost"),
+            'icon_url': (params[:icon_url] || MATTERMOST_WEBHOOKS_ICON_URL || "https://www.mattermost.org/wp-content/uploads/2016/04/icon.png")
           }
           http = Net::HTTP.new(uri.host, uri.port)
           http.use_ssl = (uri.scheme == 'https')
@@ -55,7 +57,13 @@ module Fastlane
                                        description: "Mattermost Incoming Webhooks URL"),
           FastlaneCore::ConfigItem.new(key: :params,
                                        env_name: "MATTERMOST_WEBHOOKS_PARAMS",
-                                       description: "Mattermost Incoming Webhooks Params")
+                                       description: "Mattermost Incoming Webhooks Params"),
+          FastlaneCore::ConfigItem.new(key: :username,
+                                       env_name: "MATTERMOST_WEBHOOKS_USERNAME",
+                                       description: "Mattermost Incoming Webhooks Username"),
+          FastlaneCore::ConfigItem.new(key: :icon_url,
+                                       env_name: "MATTERMOST_WEBHOOKS_ICON_URL",
+                                       description: "Mattermost Incoming Webhooks Icon URL")
         ]
       end
 
@@ -71,7 +79,9 @@ module Fastlane
         [
           'mattermost(
             url: "https://example.mattermost.com/hooks/xxx-generatedkey-xxx",
-            params: "Hello, this is some text\nThis is more text. :tada:"
+            params: "Hello, this is some text\nThis is more text. :tada:",
+            username: "Fastlane Mattermost",
+            icon_url: "https://www.mattermost.org/wp-content/uploads/2016/04/icon.png"
           )'
         ]
       end
