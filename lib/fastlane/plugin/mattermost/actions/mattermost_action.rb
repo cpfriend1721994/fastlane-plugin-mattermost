@@ -11,8 +11,12 @@ module Fastlane
         require 'json'
 
         uri = URI.parse(params[:uri] || MATTERMOST_WEBHOOKS_URL)
-        header = {'Content-Type': 'application/json'}
-        body = params[:params] || MATTERMOST_WEBHOOKS_PARAMS
+        header = {
+          'Content-Type': 'application/json'
+        }
+        body = {
+          'text': (params[:params] || MATTERMOST_WEBHOOKS_PARAMS)
+        }
         http = Net::HTTP.new(uri.host, uri.port)
         request = Net::HTTP::Post.new(uri.request_uri, header)
         request.body = body.to_json
@@ -61,7 +65,7 @@ module Fastlane
         [
           'mattermost(
             uri: "https://example.mattermost.com/hooks/xxx-generatedkey-xxx",
-            params: "{"text": "Hello, this is some text\nThis is more text. :tada:"}"
+            params: "Hello, this is some text\nThis is more text. :tada:"
           )'
         ]
       end
