@@ -15,7 +15,7 @@
 fastlane add_plugin mattermost
 ```
 
-3. Add `mattermost` to your lane in `Fastfile` whenever you want to upload the file
+3. Add `mattermost` to your lane in `Fastfile`, for more infomations about incoming webhook's fields read: https://developers.mattermost.com/integrate/incoming-webhooks/
 
 ```bash
 lane :build_android do
@@ -23,11 +23,23 @@ lane :build_android do
     ...
 
     # Push messages to Mattermost
+    # Minimum params example
     mattermost(
-                url: "https://example.mattermost.com/hooks/xxx-generatedkey-xxx",
-                text: "Hello, this is some text\nThis is more text. :tada:",
+                url: "https://example.mattermost.com/hooks/xxx-generatedkey-xxx",           # mandatory
+                text: "Hello, this is some text\nThis is more text. :tada:",                # mandatory
                 username: "Fastlane Mattermost",                                            # optional
                 icon_url: "https://www.mattermost.org/wp-content/uploads/2016/04/icon.png"  # optional
+              )
+    # Full params example
+    mattermost(
+                url: "https://example.mattermost.com/hooks/xxx-generatedkey-xxx",           # mandatory
+                text: "Hello, this is some text\nThis is more text. :tada:",                # mandatory
+                username: "Fastlane Mattermost",                                            # optional
+                icon_url: "https://www.mattermost.org/wp-content/uploads/2016/04/icon.png", # optional
+                channel: ... ,                                                              # optional
+                icon_emoji: ... ,                                                           # optional
+                attachments: ... ,                                                          # optional
+                props: ...                                                                  # optional
               )
 ```
 

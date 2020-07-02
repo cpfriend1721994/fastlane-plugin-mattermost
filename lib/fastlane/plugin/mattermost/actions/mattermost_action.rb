@@ -1,6 +1,15 @@
 require 'fastlane/action'
 require_relative '../helper/mattermost_helper'
 
+DEFAULT_USERNAME = "Fastlane Mattermost"
+DEFAULT_ICON_URL = "https://www.mattermost.org/wp-content/uploads/2016/04/icon.png"
+
+def is_blank? variable
+  str_variable = variable
+  str_variable = variable.strip if variable.class.to_s == "String"
+  str_variable.nil? || str_variable.empty?
+end
+
 module Fastlane
   module Actions
     class MattermostAction < Action
@@ -17,9 +26,13 @@ module Fastlane
           }
           body = {
             'text': params[:text],
-            'username': ((params[:username].nil? || params[:username].strip.empty?) ? "Fastlane Mattermost" : params[:username]),
-            'icon_url': ((params[:icon_url].nil? || params[:icon_url].strip.empty?) ? "https://www.mattermost.org/wp-content/uploads/2016/04/icon.png" : params[:icon_url])
+            'username': (is_blank?(params[:username]) ? DEFAULT_USERNAME : params[:username]),
+            'icon_url': (is_blank?(params[:icon_url]) ? DEFAULT_ICON_URL : params[:icon_url])
           }
+          body.merge!('channel': params[:channel]) if is_blank?(params[:channel])
+          body.merge!('icon_emoji': params[:icon_emoji]) if is_blank?(params[:icon_emoji])
+          body.merge!('attachments': params[:attachments]) if is_blank?(params[:attachments])
+          body.merge!('props': params[:props]) if is_blank?(params[:props])
           http = Net::HTTP.new(uri.host, uri.port)
           http.use_ssl = (uri.scheme == 'https')
           request = Net::HTTP::Post.new(uri.request_uri, header)
@@ -65,7 +78,23 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :icon_url,
                                        env_name: "MATTERMOST_WEBHOOKS_ICON_URL",
                                        optional: true,
-                                       description: "Mattermost Incoming Webhooks Icon URL")
+                                       description: "Mattermost Incoming Webhooks Icon URL"),
+          FastlaneCore::ConfigItem.new(key: :channel,
+                                       env_name: "MATTERMOST_WEBHOOKS_CHANNEL",
+                                       optional: true,
+                                       description: "Mattermost Incoming Webhooks Channel"),
+          FastlaneCore::ConfigItem.new(key: :icon_emoji,
+                                       env_name: "MATTERMOST_WEBHOOKS_ICON_EMOJI",
+                                       optional: true,
+                                       description: "Mattermost Incoming Webhooks Icon Emoji"),
+          FastlaneCore::ConfigItem.new(key: :attachments,
+                                       env_name: "MATTERMOST_WEBHOOKS_ATTACHMENTS",
+                                       optional: true,
+                                       description: "Mattermost Incoming Webhooks Attachments"),
+          FastlaneCore::ConfigItem.new(key: :props,
+                                       env_name: "MATTERMOST_WEBHOOKS_PROPS",
+                                       optional: true,
+                                       description: "Mattermost Incoming Webhooks Properties")
         ]
       end
 
@@ -84,6 +113,16 @@ module Fastlane
             text: "Hello, this is some text\nThis is more text. :tada:",
             username: "Fastlane Mattermost",
             icon_url: "https://www.mattermost.org/wp-content/uploads/2016/04/icon.png"
+          )',
+          'mattermost(
+            url: "https://example.mattermost.com/hooks/xxx-generatedkey-xxx",
+            text: "Hello, this is some text\nThis is more text. :tada:",
+            username: "Fastlane Mattermost",
+            icon_url: "https://www.mattermost.org/wp-content/uploads/2016/04/icon.png",
+            channel: ... ,
+            icon_emoji: ... ,
+            attachments: ... ,
+            props: ...
           )'
         ]
       end
