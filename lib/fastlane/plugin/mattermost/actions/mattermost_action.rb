@@ -33,6 +33,7 @@ module Fastlane
           body.merge!('icon_emoji': params[:icon_emoji]) if is_blank?(params[:icon_emoji])
           body.merge!('attachments': params[:attachments]) if is_blank?(params[:attachments])
           body.merge!('props': params[:props]) if is_blank?(params[:props])
+          body.merge!('type': params[:type]) if is_blank?(params[:type])
           http = Net::HTTP.new(uri.host, uri.port)
           http.use_ssl = (uri.scheme == 'https')
           request = Net::HTTP::Post.new(uri.request_uri, header)
@@ -94,7 +95,11 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :props,
                                        env_name: "MATTERMOST_WEBHOOKS_PROPS",
                                        optional: true,
-                                       description: "Mattermost Incoming Webhooks Properties")
+                                       description: "Mattermost Incoming Webhooks Properties"),
+          FastlaneCore::ConfigItem.new(key: :type,
+                                       env_name: "MATTERMOST_WEBHOOKS_TYPE",
+                                       optional: true,
+                                       description: "Mattermost Incoming Webhooks Type")
         ]
       end
 
@@ -122,7 +127,8 @@ module Fastlane
             channel: ... ,
             icon_emoji: ... ,
             attachments: ... ,
-            props: ...
+            props: ... ,
+            type: ...
           )'
         ]
       end

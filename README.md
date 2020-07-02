@@ -39,7 +39,8 @@ lane :build_android do
                 channel: ... ,                                                              # optional
                 icon_emoji: ... ,                                                           # optional
                 attachments: ... ,                                                          # optional
-                props: ...                                                                  # optional
+                props: ... ,                                                                # optional
+                type: ...                                                                   # optional
               )
 ```
 
