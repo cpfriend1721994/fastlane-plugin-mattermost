@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.email         = 'hedspi1721994@gmail.com'
 
   spec.summary       = 'Fastlane plugin for push messages to Mattermost'
-  # spec.homepage      = "https://github.com/<GITHUB_USERNAME>/fastlane-plugin-mattermost"
+  spec.homepage      = "https://github.com/cpfriend1721994/fastlane-plugin-mattermost"
   spec.license       = "MIT"
 
   spec.files         = Dir["lib/**/*"] + %w(README.md LICENSE)

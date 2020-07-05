@@ -25,23 +25,23 @@ lane :build_android do
     # Push messages to Mattermost
     # Minimum params example
     mattermost(
-                url: "https://example.mattermost.com/hooks/xxx-generatedkey-xxx",           # mandatory
-                text: "Hello, this is some text\nThis is more text. :tada:",                # mandatory
-                username: "Fastlane Mattermost",                                            # optional
-                icon_url: "https://www.mattermost.org/wp-content/uploads/2016/04/icon.png"  # optional
-              )
+        url: "https://example.mattermost.com/hooks/xxx-generatedkey-xxx",           # mandatory
+        text: "Hello, this is some text\nThis is more text. :tada:",                # mandatory
+        username: "Fastlane Mattermost",                                            # optional
+        icon_url: "https://www.mattermost.org/wp-content/uploads/2016/04/icon.png"  # optional
+    )
     # Full params example
     mattermost(
-                url: "https://example.mattermost.com/hooks/xxx-generatedkey-xxx",           # mandatory
-                text: "Hello, this is some text\nThis is more text. :tada:",                # mandatory
-                username: "Fastlane Mattermost",                                            # optional
-                icon_url: "https://www.mattermost.org/wp-content/uploads/2016/04/icon.png", # optional
-                channel: ... ,                                                              # optional
-                icon_emoji: ... ,                                                           # optional
-                attachments: ... ,                                                          # optional
-                props: ... ,                                                                # optional
-                type: ...                                                                   # optional
-              )
+        url: "https://example.mattermost.com/hooks/xxx-generatedkey-xxx",           # mandatory
+        text: "Hello, this is some text\nThis is more text. :tada:",                # mandatory
+        username: "Fastlane Mattermost",                                            # optional
+        icon_url: "https://www.mattermost.org/wp-content/uploads/2016/04/icon.png", # optional
+        channel: ... ,                                                              # optional
+        icon_emoji: ... ,                                                           # optional
+        attachments: ... ,                                                          # optional
+        props: ... ,                                                                # optional
+        type: ...                                                                   # optional
+    )
 ```
 
 ## About mattermost
