@@ -4,10 +4,10 @@ require_relative '../helper/mattermost_helper'
 DEFAULT_USERNAME = "Fastlane Mattermost"
 DEFAULT_ICON_URL = "https://www.mattermost.org/wp-content/uploads/2016/04/icon.png"
 
-def is_blank? variable
+def is_set variable
   str_variable = variable
   str_variable = variable.strip if variable.class.to_s == "String"
-  str_variable.nil? || str_variable.empty?
+  variable && !(str_variable.nil? || str_variable.empty?)
 end
 
 module Fastlane
@@ -25,15 +25,21 @@ module Fastlane
             'Content-Type': 'application/json'
           }
           body = {
-            'text': params[:text],
-            'username': (is_blank?(params[:username]) ? DEFAULT_USERNAME : params[:username]),
-            'icon_url': (is_blank?(params[:icon_url]) ? DEFAULT_ICON_URL : params[:icon_url])
+            'username': (is_set(params[:username]) ? params[:username] : DEFAULT_USERNAME),
+            'icon_url': (is_set(params[:icon_url]) ? params[:icon_url] : DEFAULT_ICON_URL)
           }
-          body.merge!('channel': params[:channel]) if is_blank?(params[:channel])
-          body.merge!('icon_emoji': params[:icon_emoji]) if is_blank?(params[:icon_emoji])
-          body.merge!('attachments': params[:attachments]) if is_blank?(params[:attachments])
-          body.merge!('props': params[:props]) if is_blank?(params[:props])
-          body.merge!('type': params[:type]) if is_blank?(params[:type])
+
+          if !is_set(params[:text]) && !is_set(params[:attachments])
+            UI.error("You need to set either 'text' or 'attachments'")
+            return
+          end
+
+          body.merge!('text': params[:text]) if is_set(params[:text])
+          body.merge!('channel': params[:channel]) if is_set(params[:channel])
+          body.merge!('icon_emoji': params[:icon_emoji]) if is_set(params[:icon_emoji])
+          body.merge!('attachments': params[:attachments]) if is_set(params[:attachments])
+          body.merge!('props': params[:props]) if is_set(params[:props])
+          body.merge!('type': params[:type]) if is_set(params[:type])
           http = Net::HTTP.new(uri.host, uri.port)
           http.use_ssl = (uri.scheme == 'https')
           request = Net::HTTP::Post.new(uri.request_uri, header)
@@ -41,9 +47,10 @@ module Fastlane
           response = http.request(request)
         rescue => exception
           UI.error("Exception: #{exception}")
-        ensure
-          UI.success('Successfully push messages to Mattermost')
+          return
         end
+
+        UI.success('Successfully push messages to Mattermost')
       end
 
       def self.description
@@ -70,8 +77,9 @@ module Fastlane
                                        sensitive: true,
                                        description: "Mattermost Incoming Webhooks URL"),
           FastlaneCore::ConfigItem.new(key: :text,
-                                       env_name: "MATTERMOST_WEBHOOKS_PARAMS",
-                                       description: "Mattermost Incoming Webhooks Params"),
+                                       env_name: "MATTERMOST_WEBHOOKS_TEXT",
+                                       optional: true,
+                                       description: "Mattermost Incoming Webhooks Text"),
           FastlaneCore::ConfigItem.new(key: :username,
                                        env_name: "MATTERMOST_WEBHOOKS_USERNAME",
                                        optional: true,
@@ -91,6 +99,7 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :attachments,
                                        env_name: "MATTERMOST_WEBHOOKS_ATTACHMENTS",
                                        optional: true,
+                                       skip_type_validation: true,
                                        description: "Mattermost Incoming Webhooks Attachments"),
           FastlaneCore::ConfigItem.new(key: :props,
                                        env_name: "MATTERMOST_WEBHOOKS_PROPS",
