@@ -26,7 +26,7 @@ lane :build_android do
     # Minimum params example
     mattermost(
         url: "https://example.mattermost.com/hooks/xxx-generatedkey-xxx",           # mandatory
-        text: "Hello, this is some text\nThis is more text. :tada:",                # mandatory
+        text: "Hello, this is some text\nThis is more text. :tada:",                # mandatory if 'attachments' is not set
         username: "Fastlane Mattermost",                                            # optional
         icon_url: "https://www.mattermost.org/wp-content/uploads/2016/04/icon.png"  # optional
     )
@@ -38,7 +38,7 @@ lane :build_android do
         icon_url: "https://www.mattermost.org/wp-content/uploads/2016/04/icon.png", # optional
         channel: ... ,                                                              # optional
         icon_emoji: ... ,                                                           # optional
-        attachments: ... ,                                                          # optional
+        attachments: [...] ,                                                        # optional
         props: ... ,                                                                # optional
         type: ...                                                                   # optional
     )
